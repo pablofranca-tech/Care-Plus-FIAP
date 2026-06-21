@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CarePlus – Nossos Parceiros</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet"/>
+
+  <link href="../../CSS/paciente/gift-cards.css" rel="stylesheet"/>
+  <script src="../../JavaScript/auth/auth-guard.js"></script>
+</head>
+<body>
+
+<div class="bg-hero" aria-hidden="true"></div>
+
+<div class="shell">
+
+  <header>
+    <div class="logo-wrap">
+      <div class="logo-placeholder">
+        <img src="../../assets/images/Frame 1321317519.png" alt="CarePlus Logo" class="main-logo">
+      </div>
+    </div>
+    <div class="header-title">Nossos<br>parceiros</div>
+  </header>
+
+  <div class="body-row">
+
+    <aside class="sidebar" id="sidebar">
+      <button class="sidebar-toggle" id="sidebarToggle" aria-expanded="false">
+        <i class="bi bi-list"></i>
+      </button>
+      <a class="nav-item" href="../../index.html"><i class="bi bi-house-fill"></i><span class="nav-label">Início</span></a>
+      <a class="nav-item" href="../../pages/paciente/area-paciente.html"><i class="bi bi-person-fill"></i><span class="nav-label">Paciente</span></a>
+      <a class="nav-item" onclick="irParaTelemedicina('telemedicina')"><i class="bi bi-plus-circle-fill"></i><span class="nav-label">Pronto Atend.</span></a>
+      <a class="nav-item" onclick="abrirAgendamentoHub('abrirAgendamento')"><i class="bi bi-telephone-fill"></i><span class="nav-label">Agendar</span></a>
+      <a class="nav-item active" href="../../pages/paciente/care-points-dashboard.html"><i class="bi bi-trophy-fill"></i><span class="nav-label">Care Points</span></a>
+      <a class="nav-item" href="../auth/login.html" onclick="localStorage.removeItem('logado'); localStorage.removeItem('nome');" title="Sair" style="margin-top:auto;">
+        <i class="bi bi-box-arrow-left"></i><span class="nav-label">Sair</span>
+      </a>
+    </aside>
+
+    <main id="mainContent">
+
+      <div class="top-bar">
+        <button class="nav-arrow" onclick="history.back()" title="Voltar">
+          <i class="bi bi-arrow-left"></i>
+        </button>
+        <div class="search-wrap">
+          <i class="bi bi-search"></i>
+          <input type="text" id="searchInput" placeholder="Busque por marcas ou produtos…" autocomplete="off"/>
+          <i class="bi bi-x-circle-fill" id="clearSearch" style="cursor:pointer;opacity:0;transition:opacity .2s;" onclick="clearSearch()"></i>
+        </div>
+        <button class="nav-arrow" onclick="window.location.href='care-points-dashboard.html'" title="Care Points">
+          <i class="bi bi-arrow-right"></i>
+        </button>
+      </div>
+
+      <div class="points-bar">
+        <div class="pts-icon">🏆</div>
+        <div style="flex:1;">
+          <div class="pts-label">Seus Care Points disponíveis</div>
+          <div class="pts-sub">Use para resgatar gift cards exclusivos</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="pts-val" id="userPtsDisplay">40</div>
+          <div class="pts-sub">care points</div>
+        </div>
+      </div>
+
+      <div class="filter-row" id="filterRow">
+        <button class="filter-pill active" onclick="setFilter('all',this)">Todos</button>
+        <button class="filter-pill" onclick="setFilter('moda',this)">Moda</button>
+        <button class="filter-pill" onclick="setFilter('food',this)">Alimentação</button>
+        <button class="filter-pill" onclick="setFilter('esporte',this)">Esporte</button>
+        <button class="filter-pill" onclick="setFilter('bem-estar',this)">Bem-estar</button>
+        <button class="filter-pill" onclick="setFilter('tech',this)">Tech</button>
+      </div>
+
+      <div id="sectionsWrap"></div>
+
+      <div class="empty-state" id="emptyState">
+        <i class="bi bi-search"></i>
+        <p>Nenhum parceiro encontrado.</p>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<div class="modal-overlay" id="giftModal">
+  <div class="modal-box" style="position:relative;">
+    <button class="btn-close-modal" onclick="closeGiftModal()"><i class="bi bi-x-lg"></i></button>
+    <div class="modal-brand-header" id="modalBrandHeader"></div>
+    <div class="modal-body">
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-sub"  id="modalSub"></div>
+      <div id="modalBenefits"></div>
+      <div class="pts-needed">
+        <div>
+          <div class="label">Custo do gift card</div>
+          <div class="pts-sub" style="margin-top:2px;" id="modalPtsBalance"></div>
+        </div>
+        <div class="cost" id="modalCost"></div>
+      </div>
+      <button class="btn-redeem" id="modalRedeemBtn" onclick="doRedeem()"></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="../../JavaScript/paciente/gift-cards.js"></script>
+</body>
+</html>

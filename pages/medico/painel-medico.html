@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CarePlus – Painel do Médico</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet"/>
+
+  <link href="../../CSS/medico/painel-medico.css" rel="stylesheet"/>
+  <script src="../../JavaScript/auth/auth-guard.js"></script>
+</head>
+<body>
+
+<div class="bg-hero" aria-hidden="true"></div>
+
+<div class="shell">
+
+  <header>
+      <div class="logo-placeholder">
+        <img src="../../assets/images/Frame 1321317519.png" alt="CarePlus Logo" class="main-logo">
+      </div>
+    <div class="header-right">
+      <div class="doctor-badge">
+        <div class="avatar">
+            <img src="../../assets/images/fotodoutor1.png" alt="William Souza">
+        </div>
+        <div class="doc-info">
+          <div class="doc-name">Dr. Miguel Paulo G. Cenizo</div>
+          <div class="doc-role">Odontologista • CRO 12345-SP</div>
+        </div>
+      </div>
+      <div class="header-title">PACIENTES</div>
+    </div>
+  </header>
+
+  <div class="body-row">
+
+    <aside class="nav-sidebar" id="navSidebar">
+      <button class="sidebar-toggle" id="sidebarToggle" aria-expanded="false">
+        <i class="bi bi-list"></i>
+      </button>
+      <a class="nav-item active" href="../../pages/medico/painel-medico.html" title="Pacientes"><i class="bi bi-people-fill"></i><span class="nav-label">Pacientes</span></a>
+      <a class="nav-item" href="../../pages/paciente/chat.html" title="Chat"><i class="bi bi-chat-dots-fill"></i><span class="nav-label">Chat</span></a>
+      <a class="nav-item" href="#" title="Agenda"><i class="bi bi-calendar3"></i><span class="nav-label">Agenda</span></a>
+      <a class="nav-item" href="#" title="Relatórios"><i class="bi bi-file-earmark-bar-graph-fill"></i><span class="nav-label">Relatórios</span></a>
+      <a class="nav-item" href="../../pages/auth/login.html" title="Sair" style="margin-top:auto;"><i class="bi bi-box-arrow-left"></i><span class="nav-label">Sair</span></a>
+    </aside>
+
+    <div class="patients-list" id="patientsList">
+      <div class="patient-search">
+        <div class="patient-search-inner">
+          <i class="bi bi-search"></i>
+          <input type="text" id="patientSearch" placeholder="Buscar paciente…" autocomplete="off"/>
+        </div>
+      </div>
+      <div class="list-header">Consultas de hoje</div>
+      </div>
+
+    <div class="detail-panel" id="detailPanel">
+      <div class="empty-detail" id="emptyDetail">
+        <i class="bi bi-person-lines-fill"></i>
+        <p>Selecione um paciente para ver o prontuário</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal-overlay" id="chatModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="chatModalTitle"><i class="bi bi-chat-dots-fill" style="color:#7DD3FC;margin-right:8px;"></i>Chat</h3>
+      <button class="modal-close" onclick="closeModal('chat')"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="chat-messages" id="chatMsgs"></div>
+      <div class="chat-input-row">
+        <input class="chat-input" id="chatMsgInput" type="text" placeholder="Mensagem para o paciente…" autocomplete="off"/>
+        <button class="chat-send" id="chatSend"><i class="bi bi-send-fill"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="histModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="histModalTitle"><i class="bi bi-clock-history" style="color:#7DD3FC;margin-right:8px;"></i>Histórico</h3>
+      <button class="modal-close" onclick="closeModal('hist')"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="modal-body" id="histContent"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="../../JavaScript/medico/painel-medico.js"></script>
+</body>
+</html>

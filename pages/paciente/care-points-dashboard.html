@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CarePlus – Dashboard Care Points</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet"/>
+
+  <link href="../../CSS/paciente/care-points-dashboard.css" rel="stylesheet"/>
+  <script src="../../JavaScript/auth/auth-guard.js"></script>
+</head>
+<body>
+
+<div class="bg-hero" aria-hidden="true"></div>
+
+<div class="shell">
+
+  <header>
+    <div class="logo-wrap">
+      <div class="logo-placeholder">
+        <img src="../../assets/images/Frame 1321317519.png" alt="CarePlus Logo" class="main-logo">
+      </div>
+    </div>
+
+    <div class="header-title">Care Points</div>
+  </header>
+
+  <div class="body-row">
+
+    <aside class="sidebar" id="sidebar">
+      <button class="sidebar-toggle" id="sidebarToggle" aria-expanded="false">
+        <i class="bi bi-list"></i>
+      </button>
+      <a class="nav-item" href="../../index.html"><i class="bi bi-house-fill"></i><span class="nav-label">Início</span></a>
+      <a class="nav-item" href="../../pages/paciente/area-paciente.html"><i class="bi bi-person-fill"></i><span class="nav-label">Paciente</span></a>
+      <a class="nav-item" onclick="irParaTelemedicina('telemedicina')"><i class="bi bi-plus-circle-fill"></i><span class="nav-label">Pronto Atend.</span></a>
+      <a class="nav-item" onclick="abrirAgendamentoHub('abrirAgendamento')"><i class="bi bi-telephone-fill"></i><span class="nav-label">Agendar</span></a>
+      <a class="nav-item active" href="../../pages/paciente/care-points-dashboard.html"><i class="bi bi-trophy-fill"></i><span class="nav-label">Care Points</span></a>
+      <a class="nav-item" href="../auth/login.html" onclick="localStorage.removeItem('logado'); localStorage.removeItem('nome');" title="Sair" style="margin-top:auto;">
+        <i class="bi bi-box-arrow-left"></i><span class="nav-label">Sair</span>
+      </a>
+    </aside>
+
+<main>
+  <div class="row w-100 m-0 g-4 align-items-start">
+    
+    <div class="col-lg-8">
+      
+      <div class="quick-stats-row row g-3 m-0 mb-4">
+        <div class="col-md-4">
+          <div class="quick-stat-card">
+            <div class="qs-icon blue"><i class="bi bi-patch-question-fill"></i></div>
+            <div class="qs-info">
+              <span class="qs-label">Quizes Concluídos</span>
+              <h3 class="qs-val">4 <small style="font-size: 14px; opacity: 0.6;">/5</small></h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="quick-stat-card">
+            <div class="qs-icon green"><i class="bi bi-gift-fill"></i></div>
+            <div class="qs-info">
+              <span class="qs-label">Prêmios Resgatados</span>
+              <h3 class="qs-val">0</h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="quick-stat-card">
+            <div class="qs-icon purple"><i class="bi bi-trophy-fill"></i></div>
+            <div class="qs-info">
+              <span class="qs-label">Ranking Local</span>
+              <h3 class="qs-val">5º <small style="font-size: 12px; font-weight: 500;">Alphaville</small></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modules-grid row g-3 m-0 w-100">
+        <div class="col-md-6">
+          <div class="module-card" onclick="openModal('quizes')">
+            <div class="icon-box blue"><i class="bi bi-patch-question-fill"></i></div>
+            <div class="mc-content">
+              <h4>Quizes Diários</h4>
+              <p>Responda as perguntas clínicas e acumule +5 pontos hoje.</p>
+            </div>
+            <div class="mc-action">Acessar Quiz <i class="bi bi-arrow-right"></i></div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="module-card" onclick="window.location.href='gift-cards.html'">
+            <div class="icon-box green"><i class="bi bi-gift-fill"></i></div>
+            <div class="mc-content">
+              <h4>Gift Cards</h4>
+              <p>Troque seus pontos acumulados por vouchers exclusivos em parceiros.</p>
+            </div>
+            <div class="mc-action">Resgatar Prêmios <i class="bi bi-arrow-right"></i></div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="module-card" onclick="openModal('recompensas')">
+            <div class="icon-box gold"><i class="bi bi-stars"></i></div>
+            <div class="mc-content">
+              <h4>Recompensas</h4>
+              <p>Desbloqueie conquistas na sua jornada e garanta kits CarePlus.</p>
+            </div>
+            <div class="mc-action">Ver Catálogo <i class="bi bi-arrow-right"></i></div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="module-card" onclick="openModal('ranking')">
+            <div class="icon-box purple"><i class="bi bi-bar-chart-fill"></i></div>
+            <div class="mc-content">
+              <h4>Ranking</h4>
+              <p>Acompanhe sua posição no placar da Unidade Alphaville.</p>
+            </div>
+            <div class="mc-action">Conferir Posição <i class="bi bi-arrow-right"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="right-panel">
+        <div class="profile-card-v3">
+            <button class="p-gear-v3" onclick="window.location.href=_resolveRoot('/pages/paciente/area-paciente.html')" title="Configurações">
+                <i class="bi bi-gear-fill"></i>
+            </button>
+            <div class="profile-main-v3">
+                <div class="progress-circle-v3" data-progress="66">
+                    <svg viewBox="0 0 100 100">
+                        <circle class="bg" cx="50" cy="50" r="45"></circle>
+                        <circle class="meter" cx="50" cy="50" r="45" id="circleMeter"></circle>
+                    </svg>
+                    <div class="p-avatar-v3">
+                        <img src="../../assets/images/fotousuario.png" alt="Foto de William Souza" class="avatar-img-v3">
+                    </div>
+                </div>
+                <div class="p-info-v3">
+                    <h3 class="p-name-v3">William Souza</h3>
+                    <span class="p-badge-v3">Nível 4 • Alphaville</span>
+                </div>
+            </div>
+            <div class="stats-grid-v3">
+                <div class="stat-box-v3">
+                    <span class="v3-val">40</span>
+                    <span class="v3-lbl">Pontos</span>
+                </div>
+                <div class="stat-divider-v3"></div>
+                <div class="stat-box-v3">
+                    <span class="v3-val">4</span>
+                    <span class="v3-lbl">Quizes</span>
+                </div>
+            </div>
+            <div class="meta-status-v3">
+                <span>Faltam <strong>20 pts</strong> para a próxima meta</span>
+            </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-title">
+            <div class="ic"><i class="bi bi-info-lg"></i></div>
+            Como adquirir pontos?
+          </div>
+          <div class="earn-list">
+            <div class="earn-row">
+              <div class="earn-action">Cancelar consulta com antecedência</div>
+              <div class="earn-points">5 care points<small>limite 1/ mês</small></div>
+            </div>
+            <div class="earn-row">
+              <div class="earn-action">Responder às Perguntas Clínicas</div>
+              <div class="earn-points">5 care points<small>por pergunta</small></div>
+            </div>
+            <div class="earn-row">
+              <div class="earn-action">Comparecer à consulta</div>
+              <div class="earn-points">10 care points</div>
+            </div>
+            <div class="earn-row">
+              <div class="earn-action">Responder aos Quizes</div>
+              <div class="earn-points">5 care points</div>
+            </div>
+            <div class="earn-row">
+              <div class="earn-action">Feedback sobre as consultas</div>
+              <div class="earn-points">5 care points</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalQuizes">
+  <div class="modal-box glass-effect" style="max-width:500px;">
+    <div class="modal-head" style="border:none;padding-bottom:10px;">
+      <h3 style="font-style:italic;font-size:24px;font-weight:800;color:#F5A623;">
+        <i class="bi bi-map-fill"></i> Jornada de Quizes
+      </h3>
+      <button class="modal-close" onclick="closeModal('quizes')"><i class="bi bi-x-lg"></i></button>
+    </div>
+    
+    <div class="modal-body" style="padding:10px 30px 40px; position: relative;">
+      
+      <div class="quiz-xp-bar">
+        <div class="xp-text">
+            <span class="xp-level">Nível 4</span>
+            <span class="xp-score">120 / 200 XP</span>
+        </div>
+        <div class="xp-track">
+            <div class="xp-fill" style="width: 60%;"></div>
+        </div>
+      </div>
+
+      <div class="game-path">
+        <div class="game-node left locked" style="animation: fadeUp 0.4s 0.1s both;">
+          <div class="node-icon"><i class="bi bi-lock-fill"></i></div>
+          <div class="node-info">
+            <div class="n-title">Fase 3</div>
+            <div class="n-sub">Dia da Consulta</div>
+          </div>
+        </div>
+
+        <div class="game-node right locked" style="animation: fadeUp 0.4s 0.2s both;">
+          <div class="node-icon"><i class="bi bi-lock-fill"></i></div>
+          <div class="node-info">
+            <div class="n-title">Fase 2</div>
+            <div class="n-sub">Amanhã</div>
+          </div>
+        </div>
+
+        <div class="game-node center active" id="q1PathItem" onclick="openQuizQuestion()" style="animation: fadeUp 0.4s 0.3s both;">
+          <div class="node-icon pulse-gold"><i class="bi bi-play-fill"></i></div>
+          <div class="node-info">
+            <div class="n-title highlight">Fase 1</div>
+            <div class="n-sub highlight-sub">Disponível Agora!</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-footer-reward">
+        <i class="bi bi-star-fill"></i> Ganhe 5 Care Points ao vencer cada fase!
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalQuizQ">
+  <div class="modal-box" style="max-width:460px;">
+    <div class="modal-head" style="border:none;padding-bottom:4px;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="padding:5px 16px;border-radius:20px;background:rgba(245,166,35,.18);color:#F5A623;font-size:14px;font-weight:800;border:1px solid rgba(245,166,35,.3);">
+          <i class="bi bi-star-fill" style="font-size:11px;margin-right:4px;"></i>5 care points
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeQuizQ()"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="modal-body" style="padding:10px 24px 28px;">
+
+      <div style="height:5px;background:rgba(255,255,255,.1);border-radius:4px;margin-bottom:6px;overflow:hidden;">
+        <div id="quizProgress" style="height:100%;background:linear-gradient(90deg,#0079C8,#F5A623);border-radius:4px;transition:width .5s cubic-bezier(.22,1,.36,1);width:0%;"></div>
+      </div>
+      <div id="quizCounter" style="font-size:10px;color:rgba(255,255,255,.4);font-weight:700;letter-spacing:.5px;margin-bottom:18px;">PERGUNTA 1 DE 5</div>
+
+      <div id="quizQuestionText" style="font-size:16px;font-weight:600;color:#fff;line-height:1.55;margin-bottom:22px;min-height:52px;"></div>
+
+      <div id="quizOptions" style="display:flex;flex-direction:column;gap:10px;"></div>
+
+      <div id="quizFeedback" style="display:none;margin-top:16px;padding:13px 18px;border-radius:14px;font-size:14px;font-weight:600;text-align:center;animation:popIn .3s cubic-bezier(.34,1.56,.64,1) both;"></div>
+
+      <button id="quizNextBtn" onclick="nextQuizQuestion()" style="display:none;margin-top:14px;width:100%;padding:13px;border-radius:14px;border:none;background:linear-gradient(135deg,#0079C8,#003B62);color:#fff;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:transform .2s,box-shadow .2s;">
+        Próxima →
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalRecompensas">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3><i class="bi bi-stars" style="color:#F5A623;"></i> Recompensas</h3>
+      <button class="modal-close" onclick="closeModal('recompensas')"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:16px;">Conquistas que você pode desbloquear acumulando Care Points.</p>
+      <div class="earn-list">
+        <div class="reward-item">
+          <div class="reward-left"><div class="reward-icon">🦷</div><div><div class="reward-name">20% OFF Tratamentos Odonto</div><div class="reward-desc">Cashback em clareamento dentário</div></div></div>
+          <span class="reward-pts-badge badge-locked">60 pts</span>
+        </div>
+        <div class="reward-item">
+          <div class="reward-left"><div class="reward-icon">⌚</div><div><div class="reward-name">Smartwatch CarePlus</div><div class="reward-desc">Acompanhe sua evolução de saúde</div></div></div>
+          <span class="reward-pts-badge badge-locked">200 pts</span>
+        </div>
+        <div class="reward-item">
+          <div class="reward-left"><div class="reward-icon">🏅</div><div><div class="reward-name">Plano Executivo 2</div><div class="reward-desc">Upgrade automático de plano</div></div></div>
+          <span class="reward-pts-badge badge-locked">150 pts</span>
+        </div>
+        <div class="reward-item">
+          <div class="reward-left"><div class="reward-icon">💊</div><div><div class="reward-name">Kit Higiene Bucal</div><div class="reward-desc">5 produtos premium CarePlus</div></div></div>
+          <span class="reward-pts-badge badge-unlocked" onclick="redeemReward(this,'Kit Higiene Bucal')">Resgatar</span>
+        </div>
+        <div class="reward-item">
+          <div class="reward-left"><div class="reward-icon">🏃</div><div><div class="reward-name">Academia Grátis 2 semanas</div><div class="reward-desc">Parceiras CarePlus</div></div></div>
+          <span class="reward-pts-badge badge-unlocked" onclick="redeemReward(this,'Academia 2 semanas')">Resgatar</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalRanking">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3><i class="bi bi-bar-chart-fill" style="color:#F5A623;"></i> Ranking</h3>
+      <button class="modal-close" onclick="closeModal('ranking')"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:16px;">Ranking mensal • Unidade Alphaville</p>
+      <div>
+        <div class="rank-item"><div class="rank-pos gold">🥇</div><div class="rank-av"><i class="bi bi-person-fill"></i></div><div class="rank-info"><div class="rank-name">Ana Beatriz F.</div><div class="rank-unit">Alphaville</div></div><div class="rank-score">142 pts</div></div>
+        <div class="rank-item"><div class="rank-pos silver">🥈</div><div class="rank-av"><i class="bi bi-person-fill"></i></div><div class="rank-info"><div class="rank-name">Carlos Eduardo M.</div><div class="rank-unit">Alphaville</div></div><div class="rank-score">118 pts</div></div>
+        <div class="rank-item"><div class="rank-pos bronze">🥉</div><div class="rank-av"><i class="bi bi-person-fill"></i></div><div class="rank-info"><div class="rank-name">Patrícia Alves</div><div class="rank-unit">Alphaville</div></div><div class="rank-score">97 pts</div></div>
+        <div class="rank-item"><div class="rank-pos" style="color:rgba(255,255,255,.4);">4</div><div class="rank-av"><i class="bi bi-person-fill"></i></div><div class="rank-info"><div class="rank-name">Roberto Lima</div><div class="rank-unit">Alphaville</div></div><div class="rank-score">84 pts</div></div>
+        <div class="rank-item me"><div class="rank-pos" style="color:#7DD3FC;font-size:13px;">5 •</div><div class="rank-av" style="border-color:rgba(0,121,200,.6);"><i class="bi bi-person-fill"></i></div><div class="rank-info"><div class="rank-name">William Souza <span style="font-size:11px;color:#7DD3FC;">(você)</span></div><div class="rank-unit">Alphaville</div></div><div class="rank-score">40 pts</div></div>
+        <div class="rank-item"><div class="rank-pos" style="color:rgba(255,255,255,.4);">6</div><div class="rank-av"><i class="bi bi-person-fill"></i></div><div class="rank-info"><div class="rank-name">Juliana Matos</div><div class="rank-unit">Alphaville</div></div><div class="rank-score">38 pts</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="../../JavaScript/paciente/care-points-dashboard.js"></script>
+</body>
+</html>

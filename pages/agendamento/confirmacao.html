@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CarePlus – Confirmação de Consulta</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;1,600&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <link href="../../CSS/agendamento/confirmacao.css" rel="stylesheet"/>
+  <script src="../../JavaScript/auth/auth-guard.js"></script>
+</head>
+<body>
+
+<div class="bg-hero" aria-hidden="true"></div>
+
+<div class="shell">
+  <header>
+    <div class="logo-wrap">
+      <div class="logo-placeholder">
+        <img src="../../assets/images/Frame 1321317519.png" alt="CarePlus Logo" class="main-logo" style="height: 45px; width: auto;">
+      </div>
+    </div>
+    <div class="header-title">Confirmação<br>Inteligente</div>
+  </header>
+
+  <div class="body-row">
+
+    <aside class="sidebar" id="sidebar">
+      <button class="sidebar-toggle" id="sidebarToggle" aria-expanded="false">
+        <i class="bi bi-list"></i>
+      </button>
+      <a class="nav-item" href="../../index.html"><i class="bi bi-house-fill"></i><span class="nav-label">Início</span></a>
+      <a class="nav-item" href="../../pages/paciente/area-paciente.html"><i class="bi bi-person-fill"></i><span class="nav-label">Paciente</span></a>
+      <a class="nav-item" onclick="irParaTelemedicina('telemedicina')"><i class="bi bi-plus-circle-fill"></i><span class="nav-label">Pronto Atend.</span></a>
+      <a class="nav-item active" onclick="abrirAgendamentoHub('abrirAgendamento')"><i class="bi bi-telephone-fill"></i><span class="nav-label">Agendar</span></a>
+      <a class="nav-item" href="../../pages/paciente/care-points-dashboard.html"><i class="bi bi-trophy-fill"></i><span class="nav-label">Care Points</span></a>
+      <a class="nav-item" href="../auth/login.html" onclick="localStorage.removeItem('logado'); localStorage.removeItem('nome');" title="Sair" style="margin-top:auto;">
+        <i class="bi bi-box-arrow-left"></i><span class="nav-label">Sair</span>
+      </a>
+    </aside>
+
+    <main id="mainContent">
+
+<div class="confirm-info-flow">
+      
+  <div class="glass-card card-resumo" id="cardResumo">
+    <div class="resumo-header">
+      <h2>Resumo</h2>
+      <button class="btn-download" id="btnPdf" aria-label="Baixar PDF">
+        <i class="bi bi-download"></i> PDF
+      </button>
+    </div>
+    <div class="resumo-row">Paciente: <strong id="rPaciente">—</strong></div>
+    <div class="resumo-row">Data: <strong id="rData">—</strong></div>
+    <div class="resumo-row">Horário: <strong id="rHorario">—</strong></div>
+    <div class="resumo-row">Doutor: <strong id="rDoutor">—</strong></div>
+    <div class="resumo-row">Especialidade: <strong id="rEspec">—</strong></div>
+    <div class="resumo-row">Local: <strong>Unidade Alphaville</strong></div>
+    <div style="margin-top:10px">
+      <span class="status-badge badge-confirmed"><i class="bi bi-check-circle-fill"></i> Aguardando confirmação</span>
+    </div>
+  </div>
+
+  <div class="glass-card card-weather" id="cardWeather">
+    <h3 style="font-size: 16px; color: #fff; margin-bottom: 12px;">
+      <i class="bi bi-cloud-sun-fill" style="color:#FCD34D; margin-right:6px;"></i>Previsão do tempo
+    </h3>
+    <div id="weatherContent"></div>
+  </div>
+
+  <div class="glass-card card-instructions">
+    <h3 style="font-size: 16px; color: #fff; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+      <i class="bi bi-info-circle-fill" style="color: var(--blue);"></i> Orientações
+    </h3>
+    <ul class="instruction-list">
+      <li>
+        <i class="bi bi-person-badge" style="color: #4ADE80;"></i>
+        <span>Traga um <strong>documento original com foto</strong>.</span>
+      </li>
+      <li>
+        <i class="bi bi-clock-history" style="color: #FCD34D;"></i>
+        <span>Chegue com <strong>15 minutos</strong> de antecedência.</span>
+      </li>
+      <li>
+        <i class="bi bi-qr-code" style="color: #7DD3FC;"></i>
+        <span>O <strong>Check-in</strong> pode ser feito On-line ou pelo QR Code.</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="action-bar-confirm">
+    <div class="confirm-cancel-row">
+      <button class="btn-cancel" id="btnOpenCancelModal">
+        <i class="bi bi-x-lg"></i> Cancelar
+      </button>
+      <button class="btn-confirm" id="btnConfirm">
+        <i class="bi bi-check-lg"></i> Confirmar Consulta
+      </button>
+    </div>
+  </div>
+
+</div>      
+    <div class="glass-card card-map" id="cardMap">
+      <div id="map"></div>
+      <div class="nav-pill" id="navPill">
+        <a class="pill-waze" id="wazeLink" href="#" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="#05C8F0"/><text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle" font-size="22" fill="#fff">W</text></svg>
+          Waze
+        </a>
+        <div class="pill-divider"></div>
+        <a class="pill-uber" id="uberLink" href="#" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="#fff"/><text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle" font-size="22" fill="#000">U</text></svg>
+          Uber
+        </a>
+      </div>
+      <div class="map-overlay" id="mapOverlay" style="display:none;">
+        <div class="overlay-icon">🗺️</div>
+        <h3>Mapa disponível em breve</h3>
+        <p>Sua consulta está agendada para</p>
+        <div class="overlay-date" id="overlayDate">—</div>
+        <p style="margin-top:4px;">O mapa e a previsão do tempo ficam disponíveis <strong style="color:#fff;">7 dias antes</strong> da consulta. Volte mais perto da data!</p>
+        <button class="btn-reminder" id="btnAddCal">
+          <i class="bi bi-calendar-plus"></i> Adicionar ao Calendário
+        </button>
+      </div>
+    </div> 
+    </main>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalCancelamento">
+  <div class="modal-box">
+    
+    <div class="modal-head" style="justify-content: center;">
+      <h3 style="margin: 0;">Confirmar Cancelamento</h3>
+    </div>
+    
+    <div class="modal-body">
+      <p style="color: rgba(255,255,255,0.8); font-size: 14px; margin-bottom: 20px; text-align: center;">
+        Tem certeza que deseja cancelar esta etapa? Seu agendamento não será concluído.
+      </p>
+        
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 24px;">
+        <button class="btn-primary-modal" id="btnKeepAppt">
+          Não, Voltar
+        </button>
+        <button class="btn-ghost-danger" id="btnConfirmCancel">
+          Sim, Cancelar
+        </button>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<div class="success-overlay" id="successOverlay">
+  <div class="success-icon"><i class="bi bi-check-lg"></i></div>
+  <h2>Consulta Confirmada!</h2>
+  <p id="successMsg">Agendamento com sucesso! Nos vemos em breve.</p>
+  <a class="btn-home" href="../../index.html"><i class="bi bi-house-fill"></i> Voltar ao Início</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="../../JavaScript/agendamento/confirmacao.js"></script>
+</body>
+</html>

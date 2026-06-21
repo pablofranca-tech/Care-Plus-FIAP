@@ -1,0 +1,24 @@
+:root {
+    --blue:       #0079C8;
+    --blue-dark:  #003B62;
+    --white:      #FFFFFF;
+    
+    --success:    #4ADE80;
+    --success-bg: rgba(74, 222, 128, 0.15);
+    --danger:     #EF4444;
+    --danger-soft:#FCA5A5;
+    --info:       #7DD3FC;
+
+    --radius:     30px;
+    --blur:       40px;
+
+    --glass-light:     rgba(255,255,255,0.18);
+    --glass-mid:       rgba(0,121,200,0.28);
+    --glass-dark:      rgba(0,59,98,0.72);
+    --glass-btn-light: rgba(255,255,255,0.22);
+    --glass-border:    rgba(255,255,255,0.35);
+
+    --sidebar-w:        72px;
+    --sidebar-expanded: 220px;
+    --header-h:         90px;
+}
